@@ -11,19 +11,25 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   data() {
     return {
       sequencia: 1,
-      quantidade: 1,
-      preco: 9.99,
     }
   },
-
+  computed: {
+    quantidade() {
+      return this.$store.state.parametros.quantidade
+    },
+    preco() {
+      return this.$store.state.parametros.preco
+    },
+  },
   methods: {
-    ...mapMutations(['adicionarProduto']),
+    ...mapActions('carrinho', ['adicionarProduto']),
+    //...mapMutations(['adicionarProduto']),
     adicionar() {
       const produto = {
         id: this.sequencia,
@@ -35,7 +41,8 @@ export default {
 
       //this.$store.state.produtos.push(produto)
       //this.$store.commit('adicionarProduto', produto) // utilizando somente mutations
-      this.adicionarProduto(produto) //utilizando mapMutations
+      //this.$store.dispatch('adicionarProduto', produto) // utilizando actions
+      this.adicionarProduto(produto) //utilizando mapMutations oo mapActions
     },
   },
 }
